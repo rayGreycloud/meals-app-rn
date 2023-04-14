@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-const List = ({ list }) => {
+const List = ({ list, textStyle }) => {
   return list.map((item) => (
     <View key={item} style={styles.item}>
-      <Text style={styles.text}>{item}</Text>
+      <Text style={[styles.text, textStyle]}>{item}</Text>
     </View>
   ));
 };

@@ -1,12 +1,14 @@
+import { useLayoutEffect } from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import IconButton from '../components/IconButton';
+import List from '../components/MealDetail/List';
 import MealDetails from '../components/MealDetails';
 import Subtitle from '../components/MealDetail/Subtitle';
-import List from '../components/MealDetail/List';
 
 import { MEALS } from '../data/dummy-data';
 
-const MealDetailsScreen = ({ route }) => {
+const MealDetailsScreen = ({ route, navigation }) => {
   const { mealId } = route.params;
 
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
@@ -19,6 +21,23 @@ const MealDetailsScreen = ({ route }) => {
     steps,
     title
   } = selectedMeal;
+
+  const headerButtonPressHandler = () => {
+    console.log('Mark as favorite!');
+  };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: '',
+      headerRight: () => (
+        <IconButton
+          icon='star'
+          iconColor='#fff'
+          onPress={headerButtonPressHandler}
+        />
+      )
+    });
+  }, [navigation, headerButtonPressHandler]);
 
   return (
     <ScrollView style={styles.rootContainer}>
@@ -43,7 +62,7 @@ const MealDetailsScreen = ({ route }) => {
           <List list={ingredients} />
 
           <Subtitle subtitle={'Steps'} />
-          <List list={steps} />
+          <List list={steps} textStyle={{ textAlign: 'left' }} />
         </View>
       </View>
     </ScrollView>
